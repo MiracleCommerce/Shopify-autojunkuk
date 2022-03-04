@@ -165,7 +165,7 @@
 
       {% if section.settings.nav_below_logo %}
         <div class="grid--full">
-          <div class="grid__item">
+          <div class="grid__item one-quarter">
             {% if request.page_type == 'index' %}
               <h1 class="site-header__logo{% if section.settings.logo == blank %}{% unless section.settings.left_aligned_logo == false and section.settings.nav_below_logo %} post-large--left{% endunless %}{% endif %}" itemscope itemtype="http://schema.org/Organization">
             {% else %}
@@ -199,6 +199,16 @@
             {% else %}
               </div>
             {% endif %}
+          </div>
+          <div class="grid__item one-half">
+            {% if section.settings.header_search_enable %}
+              <div class="header-bar__module header-bar__search">
+                {% include 'search-bar' with 'header' %}
+              </div>
+            {% endif %}
+          </div>
+          <div class="grid__item one-quarter">
+
           </div>
         </div>
         <div class="grid--full medium-down--hide">
