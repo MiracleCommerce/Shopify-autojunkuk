@@ -19,7 +19,6 @@
         border-top: 1px solid {{ settings.color_borders }};
         border-bottom: 1px solid {{ settings.color_borders }};
       {% endif %}
-      margin-top: 30px;
     }
 
     {% unless section.settings.left_aligned_logo %}
@@ -52,7 +51,7 @@
     <div class="wrapper medium-down--hide">
       <div class="post-large--display-table">
 
-        {% if section.settings.show_announcement or section.settings.header_search_enable %}
+        {% if section.settings.show_announcement %}
           <div class="header-bar__left post-large--display-table-cell">
 
             {% comment %}
@@ -75,61 +74,10 @@
                   </a>
                 {% endif %}
               </div>
-            {% elsif section.settings.header_search_enable %}
-              <div class="header-bar__module header-bar__search">
-                {% include 'search-bar' with 'header' %}
-              </div>
             {% endif %}
 
           </div>
         {% endif %}
-
-        <div class="header-bar__right post-large--display-table-cell">
-
-          {% if shop.customer_accounts_enabled %}
-            <ul class="header-bar__module header-bar__module--list">
-              {% if customer %}
-                <li>
-                  <a href="{{ routes.account_url }}">{{ 'layout.customer.account' | t }}</a>
-                </li>
-                <li>
-                  {{ 'layout.customer.log_out' | t | customer_logout_link }}
-                </li>
-              {% else %}
-                <li>
-                  {{ 'layout.customer.log_in' | t | customer_login_link }}
-                </li>
-                <li>{{ 'layout.customer.or' | t }}</li>
-                <li>
-                  {{ 'layout.customer.create_account' | t | customer_register_link }}
-                </li>
-              {% endif %}
-            </ul>
-          {% endif %}
-
-          <div class="header-bar__module">
-            <span class="header-bar__sep" aria-hidden="true"></span>
-            <a href="{{ routes.cart_url }}" class="cart-page-link">
-              <span class="icon icon-cart header-bar__cart-icon" aria-hidden="true"></span>
-            </a>
-          </div>
-
-          <div class="header-bar__module">
-            <a href="{{ routes.cart_url }}" class="cart-page-link">
-              {{ 'layout.cart.title' | t }}{% unless cart.item_count == 0 %}:{% endunless %}
-              <span class="cart-count header-bar__cart-count{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span>
-            </a>
-          </div>
-
-          {% if section.settings.header_search_enable %}
-            {% if section.settings.show_announcement %}
-              <div class="header-bar__module header-bar__search">
-                {% include 'search-bar' with 'header' %}
-              </div>
-            {% endif %}
-          {% endif %}
-
-        </div>
       </div>
     </div>
 
@@ -152,10 +100,13 @@
           {{ 'layout.navigation.menu' | t }}
         </button>
       {% endunless %}
-      <a href="{{ routes.cart_url }}" class="cart-page-link mobile-cart-page-link">
-        <span class="icon icon-cart header-bar__cart-icon" aria-hidden="true"></span>
-        {{ 'layout.cart.title' | t }} <span class="cart-count{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span>
-      </a>
+      <div class="header-bar__module">
+        <span class="header-bar__sep" aria-hidden="true"></span>
+        <a href="{{ routes.cart_url }}" class="cart-page-link mobile">
+          <span class="icon icon-cart header-bar__cart-icon" aria-hidden="true"></span>
+          <span class="cart-count header-bar__cart-count{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span>
+        </a>
+      </div>
     </div>
     {% include 'mobile-nav' with linklists[section.settings.nav_menu] %}
   </div>
@@ -165,7 +116,7 @@
 
       {% if section.settings.nav_below_logo %}
         <div class="grid--full">
-          <div class="grid__item one-quarter">
+          <div class="grid__item one-fifth medium-down--one-whole">
             {% if request.page_type == 'index' %}
               <h1 class="site-header__logo{% if section.settings.logo == blank %}{% unless section.settings.left_aligned_logo == false and section.settings.nav_below_logo %} post-large--left{% endunless %}{% endif %}" itemscope itemtype="http://schema.org/Organization">
             {% else %}
@@ -200,15 +151,73 @@
               </div>
             {% endif %}
           </div>
-          <div class="grid__item one-half">
+          <div class="grid__item one-half header-bar--middle medium-down--one-whole">
             {% if section.settings.header_search_enable %}
-              <div class="header-bar__module header-bar__search">
-                {% include 'search-bar' with 'header' %}
+              <div class="search-bar--wrapper">
+                <div class="header-bar__module header-bar__search">
+                  {% include 'search-bar' with 'header' %}
+                </div>
               </div>
             {% endif %}
           </div>
-          <div class="grid__item one-quarter">
+          {% if section.blocks.size > 0 %}
+          <div class="grid__item one-tenth medium-down--one-whole medium-down--hide">
+            <div class="header-icons__wrapper">
+              {% for block in section.blocks %}
+                <div class="header-icon_wrapper">
+                  {% if block.settings.icon_link != blank %}
+                    <a href="{{block.settings.icon_link}}">
+                  {% endif %}
+                    <img src="{{block.settings.icon | image_url: width: 100 }}" alt="{{block.settings.icon.alt}}" class="header-icon">
+                  {% if block.settings.icon_link != blank %}
+                    </a>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          <div class="grid__item one-fifth medium-down--hide">
+            <div class="header-bar__right post-large--display-table-cell text-right">
 
+              {% if shop.customer_accounts_enabled %}
+                <ul class="header-bar__module header-bar__module--list">
+                  {% if customer %}
+                    <li>
+                      <a href="{{ routes.account_url }}">{{ 'layout.customer.account' | t }}</a>
+                    </li>
+                    <li>
+                      {{ 'layout.customer.log_out' | t | customer_logout_link }}
+                    </li>
+                  {% else %}
+                    <li>
+                      {{ 'layout.customer.log_in' | t | customer_login_link }}
+                    </li>
+                    <li>{{ 'layout.customer.or' | t }}</li>
+                    <li>
+                      {{ 'layout.customer.create_account' | t | customer_register_link }}
+                    </li>
+                  {% endif %}
+                </ul>
+              {% endif %}
+    
+              <div class="header-bar__module">
+                <span class="header-bar__sep" aria-hidden="true"></span>
+                <a href="{{ routes.cart_url }}" class="cart-page-link">
+                  <span class="icon icon-cart header-bar__cart-icon" aria-hidden="true"></span>
+                  <span class="cart-count header-bar__cart-count{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span>
+                </a>
+              </div>
+    
+              {% if section.settings.header_search_enable %}
+                {% if section.settings.show_announcement %}
+                  <div class="header-bar__module header-bar__search">
+                    {% include 'search-bar' with 'header' %}
+                  </div>
+                {% endif %}
+              {% endif %}
+    
+            </div>
           </div>
         </div>
         <div class="grid--full medium-down--hide">
@@ -654,6 +663,24 @@
         "zh-CN": "可选",
         "zh-TW": "(選填)"
       }
+    }
+  ],
+  "blocks":[
+    {
+      "type":"image",
+      "name":"Header Icons",
+      "settings":[
+        {
+          "type":"image_picker",
+          "id":"icon",
+          "label":"Icon"
+        },
+        {
+          "type":"url",
+          "id":"icon_link", 
+          "label":"Icon Link"
+        }
+      ]
     }
   ]
 }

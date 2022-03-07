@@ -3121,9 +3121,30 @@ Published Data: Mar 04 2022
 .wrapper{
   max-width: 1600px;
 }
+.site-header{
+  padding: 10px 0px; 
+}
+@media screen and (min-width: 769px){
+  .site-header{
+    padding: 10px 0px; 
+  }
+  .header-bar{
+    padding: 0px; 
+  }
+}
+
+@media screen and (max-width: 768px){
+  .header-bar__module{
+    margin-bottom: 0px; 
+    float: right; 
+  }
+}
+.search-bar--wrapper{
+  padding: 0 20px; 
+}
 .header-bar__search{
   max-width: initial; 
-  width: 100%; 
+  width: 100%;
   .btn--search{
     font-size: 24px; 
     width: 45px; 
@@ -3139,5 +3160,109 @@ Published Data: Mar 04 2022
     border-radius: 22.5px;
     height: 45px;
     padding-left: 55px;
+  }
+}
+// Styles for headerbar right
+.header-bar__right{
+  width: 100%;
+  float: right; 
+}
+// Styles for login/register
+.header-bar__module--list{
+  color: $colorTextBody;
+}
+
+#customer_login_link, #customer_register_link{
+  color: $colorTextBody;
+}
+
+.mobile-nav__link #customer_login_link, .mobile-nav__link #customer_register_link{
+  color: #fff; 
+}
+// Styles for header cart Icon 
+a.cart-page-link{
+  position: relative; 
+}
+.header-bar__cart-icon{
+  color: $colorTextBody;
+  &:before{
+    font-size: 32px;
+  }
+}
+
+.cart-page-link.mobile .icon-cart{
+  color: #fff; 
+}
+
+.header-bar__cart-count{
+  position: absolute; 
+  top: -5px;
+  left: 20px; 
+  background-color: red;
+  border-radius: 50%; 
+  color: #fff;
+  font-size: 12px; 
+  line-height: 20px; 
+  text-align: center; 
+  width: 20px; 
+  height: 20px; 
+}
+
+// Styles for Site Nav
+.site-nav{
+  display: flex; 
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: none;
+  margin-top: 10px; 
+}
+
+// Header icons block 
+.header-icons__wrapper{
+  display: flex; 
+  flex-wrap: wrap;
+  align-items: center; 
+  justify-content: center; 
+}
+
+.header-icons__wrapper .header-icon_wrapper{
+  flex: 1 1 50%;
+  max-width: 50%; 
+  padding: 0 5px; 
+}
+
+.header-icons__wrapper .header-icon_wrapper img{
+  max-width: 100%; 
+}
+
+
+// Mobile Logo 
+@media screen and (max-width: 768px){
+  .site-header__logo .logo__image-wrapper.supports-js{
+    max-width: 400px; 
+    margin: 0 auto 10px auto; 
+  }
+}
+
+@media screen and (max-width: 480px){
+  .site-header__logo .logo__image-wrapper.supports-js{
+    max-width: 280px;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .search-bar--wrapper{
+    padding: 0px; 
+  }
+  .header-bar__search{
+    float: none; 
+    margin: 0; 
+    width: 100%; 
+  }
+}
+
+@media screen and (max-width: 480px){
+  .header-bar__search{
+    margin: 0px; 
   }
 }
